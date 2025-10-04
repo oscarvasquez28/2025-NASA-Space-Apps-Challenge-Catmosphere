@@ -21,7 +21,7 @@ The goal is to **predict and visualize air quality trends**, **notify users** of
 ### ⚙️ Tech Stack
 
 #### Frontend
-- **React.js (Vite or CRA)**
+- **React.js (Vite)**
 - **TailwindCSS / Material UI**
 - **Recharts / D3.js** for data visualization
 - **Leaflet.js / Mapbox** for geographic mapping
