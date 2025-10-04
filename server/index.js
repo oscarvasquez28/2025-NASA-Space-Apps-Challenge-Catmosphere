@@ -1,20 +1,16 @@
 //Import Modules and Router
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import NotificationRouter from './routes/NotificationRouter.js';
 
 //Basic Config
-dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
 //Settings and Routes of app
 app.use(cors());
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.send('Welcome to the NASA-Space App!');
-})
+app.use("/api/notifications", NotificationRouter)
 
 //Run app
 app.listen(port, () => {
