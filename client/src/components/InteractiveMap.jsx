@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import Skeleton from '@mui/material/Skeleton';
 import api from '../lib/axios';
-
+import Weather from '../services/Weather';
 
 function InteractiveMap() {
   // No hay posición por defecto, solo si no se obtiene nada se usa fallback
@@ -98,7 +98,8 @@ function MapClickHandler({ onSelect }) {
       setWeatherLoading(true);
       setWeatherError(null);
       setWeather(null);
-      api.get(`/weather/${lat}/${lng}`)
+
+      Weather.getWeather({ lat, lng })
         .then(res => {
           setWeather(res.data);
           setWeatherLoading(false);
