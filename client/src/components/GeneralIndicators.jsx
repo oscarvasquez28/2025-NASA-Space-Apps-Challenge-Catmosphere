@@ -1,6 +1,5 @@
 import { Stack, Modal, IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import CloseIcon from '@mui/icons-material/Close';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -134,35 +133,17 @@ function GeneralIndicators({location}) {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 bgcolor: 'background.paper',
-                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-                border: '2px solid #1976d2',
-                p: { xs: 2.5, sm: 4 },
-                borderRadius: 3,
-                maxWidth: 420,
-                width: '92vw',
-                minWidth: 260,
-                position: 'relative',
-                overflow: 'hidden',
+                boxShadow: 24,
+                p: 4,
+                borderRadius: 2,
+                maxWidth: 400,
+                width: '90%',
               }}>
-                <IconButton
-                  aria-label="Cerrar"
-                  onClick={() => setOpenModal(null)}
-                  sx={{ position: 'absolute', top: 8, right: 8, color: '#1976d2', zIndex: 2 }}
-                >
-                  <CloseIcon />
-                </IconButton>
-                <Box sx={{ mb: 2, textAlign: 'center' }}>
-                  <Typography id={`modal-title-${indicator.name}`} variant="h6" fontWeight="bold" color="primary" gutterBottom>
-                    {indicator.label} ({indicator.name.toUpperCase()})
-                  </Typography>
-                </Box>
-                <Typography id={`modal-desc-${indicator.name}`} variant="body1" sx={{ textAlign: 'justify', lineHeight: 1.7 }}>
-                  {indicator.description.split('\n').map((line, idx) => (
-                    <span key={idx}>
-                      {line}
-                      {idx !== indicator.description.split('\n').length - 1 && <br />}
-                    </span>
-                  ))}
+                <Typography id={`modal-title-${indicator.name}`} variant="h6" fontWeight="bold" gutterBottom>
+                  {indicator.label} ({indicator.name.toUpperCase()})
+                </Typography>
+                <Typography id={`modal-desc-${indicator.name}`} variant="body1">
+                  {indicator.description}
                 </Typography>
               </Box>
             </Modal>
