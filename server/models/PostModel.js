@@ -13,6 +13,10 @@ PostModel.init({
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    email:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     sequelize: dbConnection,
     modelName: "Posts",
