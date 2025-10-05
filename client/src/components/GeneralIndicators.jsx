@@ -4,12 +4,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import Weather from '../services/Weather';
 
 
-function GeneralIndicators() {
-  
+function GeneralIndicators({location}) {
+
   const GeneralIndicators = [
     {
       name: 'co',
@@ -44,32 +44,36 @@ function GeneralIndicators() {
   ];
   const [GeneralIndicatorsArray, setGeneralIndicatorsArray] = useState(GeneralIndicators);
 
-  async function getIndicators(location)
-  {
-    try
-    {
-        // const data = await Weather.getIndicators(location);
-        // setGeneralIndicatorsArray(data);
-      }
-    catch (error)
-    {
+  async function getIndicators(location) {
+    try {
+      const response = await Weather.getIndicators(location);
+      const indicatorsData = response.data;
+      const UpdatedIndicators = GeneralIndicators.map((indicator) => ({
+        ...indicator,
+        value: indicatorsData[indicator.name] !== undefined ? indicatorsData[indicator.name] : 'N/A',
+      }));
+      console.log(UpdatedIndicators);
+      setGeneralIndicatorsArray(UpdatedIndicators);
+    }
+    catch (error) {
       console.error(error);
       setGeneralIndicatorsArray(GeneralIndicators);
     }
   }
 
   useEffect(() => {
-    if(navigator.geolocation)
-      {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const coords = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          getIndicators(coords);          
-        });
-      }
-  }, []);
+    if (location) {
+      getIndicators(location);
+    } else if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const coords = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        getIndicators(coords);
+      });
+    }
+  }, [location]);
   return (
     <Container>
       <Stack
@@ -92,11 +96,11 @@ function GeneralIndicators() {
             key={indicator.name}
           >
             <CardContent>
-              <Box sx={{minHeight: 60, mb: 1}}>
+              <Box sx={{ minHeight: 60, mb: 1 }}>
                 <Typography variant={{ xs: 'body1', sm: 'h5' }} fontWeight="bold">{indicator.label}</Typography>
                 <Typography variant="body2" color="text.secondary">({indicator.name.toUpperCase()})</Typography>
               </Box>
-              <Typography variant="h4">15.2</Typography>
+              <Typography variant="h4">{indicator.value}</Typography>
               <Typography variant="caption" color="text.secondary">{indicator.unit}</Typography>
             </CardContent>
           </Card>
