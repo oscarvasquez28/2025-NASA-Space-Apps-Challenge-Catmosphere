@@ -9,7 +9,10 @@ export const getWeather = async (req, res) => {
 
         if (Object.keys(errors) <= 0) {
             const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=metric&lang=es&appid=${apiKey}`);
-            if (!response.ok) {
+            const responsePollution = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&lang=es&appid=${apiKey}`);
+
+
+            if (!response.ok || !responsePollution.ok) {
                 return res.status(400).json({
                     errors: errors,
                     msg: "Ocurrio un error al obtener el clima",
@@ -19,9 +22,14 @@ export const getWeather = async (req, res) => {
             }
 
             const data = await response.json();
+            const dataPollution = await responsePollution.json();
 
             const payload = {
                 temperature: data?.current?.temp,
+                wind_speed: data?.current?.wind_speed,
+                uvi_index: data?.current?.uvi,
+                humidity: data?.current?.humidity,
+                air_quality_index: dataPollution?.list[0]?.main?.aqi,
                 summary: data?.current?.weather[0].description,
             }
 
