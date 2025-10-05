@@ -11,16 +11,15 @@ import HistoricalChart from '../components/HistoricalChart';
 import { useState } from 'react';
 
 const Home = () => {
-  const [location, setLocation] = useState(null);
   return (
     <Container>
       <Box sx={{ flexGrow: 1, mt: '2rem' }}>
         <LocationHeader />
-        <GeneralIndicators location={location} />
+        <GeneralIndicators />
         <DailyRecommendation />
         <Stack spacing={2} direction="row">
           <DailyIndicators />
-          <InteractiveMap onLocationSelect={setLocation} />
+          <InteractiveMap />
         </Stack>
         <HistoricalChart />
       </Box>
