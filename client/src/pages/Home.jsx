@@ -8,17 +8,19 @@ import DailyRecommendation from '../components/DailyRecommendation';
 import DailyIndicators from '../components/DailyIndicators';
 import InteractiveMap from '../components/InteractiveMap';
 import HistoricalChart from '../components/HistoricalChart';
+import { useState } from 'react';
 
 const Home = () => {
+  const [location, setLocation] = useState(null);
   return (
     <Container>
       <Box sx={{ flexGrow: 1, mt: '2rem' }}>
         <LocationHeader />
-        <GeneralIndicators />
+        <GeneralIndicators location={location} />
         <DailyRecommendation />
         <Stack spacing={2} direction="row">
           <DailyIndicators />
-          <InteractiveMap />
+          <InteractiveMap onLocationSelect={setLocation} />
         </Stack>
         <HistoricalChart />
       </Box>
