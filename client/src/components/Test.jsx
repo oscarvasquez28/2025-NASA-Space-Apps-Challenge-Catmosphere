@@ -1,12 +1,9 @@
-function Test()
-{
-    return (
-        <section>
-            <h1>
-                Test Component
-            </h1>
-        </section>
-    )
+import React from 'react'
+
+function Test() {
+  return (
+    <div>Test</div>
+  )
 }
 
-export default Test;
+export default Test
