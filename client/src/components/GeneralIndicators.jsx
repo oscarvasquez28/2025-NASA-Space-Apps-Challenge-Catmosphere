@@ -4,41 +4,72 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useEffect,useState } from 'react';
+import Weather from '../services/Weather';
 
-const GeneralIndicatorsArray = [
-  {
-    name: 'co',
-    label: 'Monóxido de carbono',
-    unit: 'mg/m³',
-  },
-  {
-    name: 'no',
-    label: 'Óxido nítrico',
-    unit: 'µg/m³',
-  },
-  {
-    name: 'no2',
-    label: 'Dióxido de nitrógeno',
-    unit: 'µg/m³',
-  },
-  {
-    name: 'so2',
-    label: 'Dióxido de azufre',
-    unit: 'µg/m³',
-  },
-  {
-    name: 'pm10',
-    label: 'Partículas PM10',
-    unit: 'µg/m³',
-  },
-  {
-    name: 'nh3',
-    label: 'Amoniaco',
-    unit: 'µg/m³',
-  },
-];
 
 function GeneralIndicators() {
+  
+  const GeneralIndicators = [
+    {
+      name: 'co',
+      label: 'Monóxido de carbono',
+      unit: 'mg/m³',
+    },
+    {
+      name: 'no',
+      label: 'Óxido nítrico',
+      unit: 'µg/m³',
+    },
+    {
+      name: 'no2',
+      label: 'Dióxido de nitrógeno',
+      unit: 'µg/m³',
+    },
+    {
+      name: 'so2',
+      label: 'Dióxido de azufre',
+      unit: 'µg/m³',
+    },
+    {
+      name: 'pm10',
+      label: 'Partículas PM10',
+      unit: 'µg/m³',
+    },
+    {
+      name: 'nh3',
+      label: 'Amoniaco',
+      unit: 'µg/m³',
+    },
+  ];
+  const [GeneralIndicatorsArray, setGeneralIndicatorsArray] = useState(GeneralIndicators);
+
+  async function getIndicators(location)
+  {
+    try
+    {
+        // const data = await Weather.getIndicators(location);
+        // setGeneralIndicatorsArray(data);
+      }
+    catch (error)
+    {
+      console.error(error);
+      setGeneralIndicatorsArray(GeneralIndicators);
+    }
+  }
+
+  useEffect(() => {
+    if(navigator.geolocation)
+      {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          getIndicators(coords);          
+        });
+      }
+  }, []);
   return (
     <Container>
       <Stack
