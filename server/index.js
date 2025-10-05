@@ -17,6 +17,6 @@ app.use("/api/users", UserRouter)
 app.use("/api/weather", WeatherRouter)
 
 //Run app
-app.listen(port, () => {
+app.listen(port,  () => {
     console.log(`Listening on port ${port}`);
 })

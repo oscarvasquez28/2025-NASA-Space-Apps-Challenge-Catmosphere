@@ -3,7 +3,6 @@ import UserModel from "../models/UserModel.js";
 
 export const registerUser = async (req, res) => {
     try {
-        await UserModel.sync()
         const errors = {}
         const {
             name,
@@ -40,7 +39,7 @@ export const registerUser = async (req, res) => {
         }
 
         if (!lastname || !validator.isAlpha(lastname, 'es-ES', {ignore: ' '}) || lastname.length < 3) {
-            errors.nombre = "Error en el Apellido"
+            errors.apellido = "Error en el Apellido"
         }
 
 
@@ -76,7 +75,6 @@ export const registerUser = async (req, res) => {
 
 export const logInUser = async (req, res) => {
     try {
-        await UserModel.sync()
         const errors = {}
         const {email, password} = req.body;
 
