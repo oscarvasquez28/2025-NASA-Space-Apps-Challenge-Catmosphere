@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import api from '../lib/axios';
+import Weather from '../services/Weather';
 
 function LocationHeader() {
   const [location, setLocation] = useState(null);
@@ -13,9 +14,8 @@ function LocationHeader() {
 
   async function getWeather() {
     try {
-      const { data } = await api.get(`/weather/${location.lat}/${location.lng}`);
+      const data = await Weather.getWeather(location);
       setWeather(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
       setWeather(null);
