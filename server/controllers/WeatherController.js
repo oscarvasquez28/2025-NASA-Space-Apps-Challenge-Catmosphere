@@ -8,8 +8,7 @@ export const getWeather = async (req, res) => {
         const apiKey = process.env.OPEN_WEATHER_KEY
 
         if (Object.keys(errors) <= 0) {
-            const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=metric&appid=${apiKey}`);
-
+            const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=metric&lang=es&appid=${apiKey}`);
             if (!response.ok) {
                 return res.status(400).json({
                     errors: errors,
@@ -27,7 +26,7 @@ export const getWeather = async (req, res) => {
             }
 
             return res.status(200).json({
-                data: data,
+                data: payload,
                 msg: "Se obtuvo la temperatura correctamente",
                 success: true,
             })
