@@ -1,9 +1,12 @@
-import {Card, CardContent } from '@mui/material';
+import {Card, CardContent, CardHeader, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { LineChart } from '@mui/x-charts';
-
+import Weather from '../services/Weather';
+import { useEffect, useState } from 'react';
 
 function HistoricalChart() {
+
+  const [forecast, setForecast] = useState(null);
   const dayTranslations = {
     'Mon': 'Lunes',
     'Tue': 'Martes',
@@ -27,12 +30,41 @@ function HistoricalChart() {
   const englishDays = [todayAbbr, ...nextDaysAbbr];
   const Days = englishDays.map(day => dayTranslations[day]);
 
+
+    useEffect(() => {
+      async function GetForecast()
+      {
+        try {
+          const storedLocation = sessionStorage.getItem('userLocation');
+          if (storedLocation) {
+            const coords = JSON.parse(storedLocation);
+            const forecastData = await Weather.getForecast(coords);
+            setForecast(forecastData.prediction);
+          } else {
+            console.log('No user location found in sessionStorage.');
+          }
+        } catch (error) {
+          console.error('Error fetching forecast data:', error);
+        }
+  
+      }
+      GetForecast();
+    },[])
+
+
+    useEffect(() => 
+    {
+console.log('Forecast updated:', forecast);
+    },[forecast])
   return (
     <Container>
       <Card>
+        <Typography variant="h6" align="center" sx={{ mt: 2, fontWeight: 'bold' }}>
+          Pronóstico de Calidad del Aire (CO) - Próximos 5 Días
+        </Typography>
         <CardContent sx={{ minWidth: 300, minHeight: 200, textAlign: 'center', placeContent: 'center' }}>
           <LineChart
-            series={[{ data: [1, 2, 3, 4, 3] }]}
+            series={[{ data: forecast ? forecast.map(item => Number(item)) : [0, 0, 0, 0, 0], label: 'PPM' }]}
             xAxis={[{ scaleType: 'point', data: Days }]}
           />
         </CardContent>
