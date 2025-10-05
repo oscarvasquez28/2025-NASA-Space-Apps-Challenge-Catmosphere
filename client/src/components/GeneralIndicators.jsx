@@ -70,14 +70,25 @@ function GeneralIndicators() {
   }
 
   useEffect(() => {
-if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const coords = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        getIndicators(coords);
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          getIndicators(coords);
+        },
+        (error) => {
+          // Si falla la geolocalización, usar Guadalupe
+          const coords = { lat: 25.676, lng: -100.256 };
+          getIndicators(coords);
+        }
+      );
+    } else {
+      // Si no hay soporte, usar Guadalupe
+      const coords = { lat: 25.676, lng: -100.256 };
+      getIndicators(coords);
     }
   }, [location]);
   return (
