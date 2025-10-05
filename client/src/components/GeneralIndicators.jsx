@@ -3,21 +3,40 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-const GeneralIndicatorsArray = [{
-  name: 'Temperature',
-}, {
-  name: 'Humidity',
-}, {
-  name: 'Wind Speed',
-}, {
-  name: 'Air Quality Index',
-}, {
-  name: 'UV Index',
-},
-{
-  name: 'Pressure',
-}];
+const GeneralIndicatorsArray = [
+  {
+    name: 'co',
+    label: 'Monóxido de carbono',
+    unit: 'mg/m³',
+  },
+  {
+    name: 'no',
+    label: 'Óxido nítrico',
+    unit: 'µg/m³',
+  },
+  {
+    name: 'no2',
+    label: 'Dióxido de nitrógeno',
+    unit: 'µg/m³',
+  },
+  {
+    name: 'so2',
+    label: 'Dióxido de azufre',
+    unit: 'µg/m³',
+  },
+  {
+    name: 'pm10',
+    label: 'Partículas PM10',
+    unit: 'µg/m³',
+  },
+  {
+    name: 'nh3',
+    label: 'Amoniaco',
+    unit: 'µg/m³',
+  },
+];
 
 function GeneralIndicators() {
   return (
@@ -42,8 +61,12 @@ function GeneralIndicators() {
             key={indicator.name}
           >
             <CardContent>
-              <Typography variant={{ xs: 'body1', sm: 'h5' }}>{indicator.name}</Typography>
-              <Typography variant="h4">--</Typography>
+              <Box sx={{minHeight: 60, mb: 1}}>
+                <Typography variant={{ xs: 'body1', sm: 'h5' }} fontWeight="bold">{indicator.label}</Typography>
+                <Typography variant="body2" color="text.secondary">({indicator.name.toUpperCase()})</Typography>
+              </Box>
+              <Typography variant="h4">15.2</Typography>
+              <Typography variant="caption" color="text.secondary">{indicator.unit}</Typography>
             </CardContent>
           </Card>
         ))}
