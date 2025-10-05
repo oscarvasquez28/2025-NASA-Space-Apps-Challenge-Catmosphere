@@ -2,9 +2,19 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import { Stack, Typography } from '@mui/material';
 
-const Days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 function DailyIndicators() {
+  const Today = new Date().toString().split(' ')[0];
+
+  const next4Days = [];
+  for (let i = 1; i <= 4; i++) {
+    const nextDay = new Date();
+    nextDay.setDate(new Date().getDate() + i);
+    next4Days.push(nextDay.toString().split(' ')[0]);
+  }
+  
+  const Days = [Today, ...next4Days];
+  
   return (
     <Container>
       {Days.map((day) => (
