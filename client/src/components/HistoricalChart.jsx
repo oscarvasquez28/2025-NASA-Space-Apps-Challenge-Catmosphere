@@ -4,14 +4,29 @@ import { LineChart } from '@mui/x-charts';
 
 
 function HistoricalChart() {
-  const Today = new Date().toString().split(' ')[0];
-  const nextDays = [];
+  const dayTranslations = {
+    'Mon': 'Lunes',
+    'Tue': 'Martes',
+    'Wed': 'Miércoles',
+    'Thu': 'Jueves',
+    'Fri': 'Viernes',
+    'Sat': 'Sábado',
+    'Sun': 'Domingo'
+  };
+
+  const getDayAbbreviation = (date) => date.toString().split(' ')[0];
+
+  const todayAbbr = getDayAbbreviation(new Date());
+  const nextDaysAbbr = [];
   for (let i = 1; i <= 4; i++) {
     const nextDay = new Date();
     nextDay.setDate(new Date().getDate() + i);
-    nextDays.push(nextDay.toString().split(' ')[0]);
+    nextDaysAbbr.push(getDayAbbreviation(nextDay));
   }
-  const Days = [Today, ...nextDays];
+
+  const englishDays = [todayAbbr, ...nextDaysAbbr];
+  const Days = englishDays.map(day => dayTranslations[day]);
+
   return (
     <Container>
       <Card>
