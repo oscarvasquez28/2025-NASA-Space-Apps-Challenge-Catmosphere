@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Weather from '../services/Weather';
 
 
-function GeneralIndicators({location}) {
+function GeneralIndicators() {
 
   const GeneralIndicators = [
     {
@@ -62,9 +62,7 @@ function GeneralIndicators({location}) {
   }
 
   useEffect(() => {
-    if (location) {
-      getIndicators(location);
-    } else if (navigator.geolocation) {
+if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const coords = {
           lat: position.coords.latitude,

@@ -12,7 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import api from '../lib/axios';
 import Weather from '../services/Weather';
 
-function InteractiveMap({ onLocationSelect }) {
+function InteractiveMap() {
   // No hay posición por defecto, solo si no se obtiene nada se usa fallback
   const [position, setPosition] = useState(null);
   const [selectedCoords, setSelectedCoords] = useState(null);
@@ -38,9 +38,7 @@ function RecenterMap({ position }) {
 function MapClickHandler({ onSelect }) {
   useMapEvent('click', (e) => {
     onSelect([e.latlng.lat, e.latlng.lng]);
-    if (onLocationSelect) {
-      onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng });
-    }
+
   });
   return null;
 }
@@ -52,9 +50,6 @@ function MapClickHandler({ onSelect }) {
         const coords = JSON.parse(stored);
         if (coords.lat && coords.lng) {
           setPosition([coords.lat, coords.lng]);
-          if (onLocationSelect) {
-            onLocationSelect(coords);
-          }
           setLoading(false);
           return;
         }
@@ -67,9 +62,6 @@ function MapClickHandler({ onSelect }) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           setPosition([pos.coords.latitude, pos.coords.longitude]);
-          if (onLocationSelect) {
-            onLocationSelect({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-          }
           setLoading(false);
         },
         (err) => {
