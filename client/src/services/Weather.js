@@ -9,4 +9,9 @@ export default {
         const { data } = await api.get(`/weather/indicators/${location.lat}/${location.lng}`);
         return data;
     },
+
+    async getForecast(location){
+        const { data } = await api.get(`/weather/forecast/${location.lat}/${location.lng}`);
+        return data;
+    }
 }

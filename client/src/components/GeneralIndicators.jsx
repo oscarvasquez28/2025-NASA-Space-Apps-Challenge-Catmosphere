@@ -14,32 +14,32 @@ function GeneralIndicators({location}) {
     {
       name: 'co',
       label: 'Monóxido de carbono',
-      unit: 'mg/m³',
+      unit: 'ppm', // Partes por millón
     },
     {
       name: 'no',
       label: 'Óxido nítrico',
-      unit: 'µg/m³',
+      unit: 'ppb', // Partes por billón
     },
     {
       name: 'no2',
       label: 'Dióxido de nitrógeno',
-      unit: 'µg/m³',
+      unit: 'ppb', // Partes por billón
     },
     {
       name: 'so2',
       label: 'Dióxido de azufre',
-      unit: 'µg/m³',
+      unit: 'ppb', // Partes por billón
     },
     {
       name: 'pm10',
       label: 'Partículas PM10',
-      unit: 'µg/m³',
+      unit: 'µg/m³', // Microgramos por metro cúbico
     },
     {
       name: 'nh3',
       label: 'Amoniaco',
-      unit: 'µg/m³',
+      unit: 'ppb', // Partes por billón
     },
   ];
   const [GeneralIndicatorsArray, setGeneralIndicatorsArray] = useState(GeneralIndicators);
