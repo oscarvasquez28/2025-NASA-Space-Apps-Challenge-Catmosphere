@@ -1,4 +1,6 @@
-import { Stack } from '@mui/material';
+import { Stack, Modal, IconButton } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,35 +16,42 @@ function GeneralIndicators({location}) {
     {
       name: 'co',
       label: 'Monóxido de carbono',
-      unit: 'ppm', // Partes por millón
+      unit: 'µg/m³',
+      description: 'El monóxido de carbono es un gas que no se puede ver ni oler. Sale principalmente de autos y estufas. Respirarlo puede causar dolor de cabeza, mareo y, en grandes cantidades, es muy peligroso para la salud.'
     },
     {
       name: 'no',
       label: 'Óxido nítrico',
-      unit: 'ppb', // Partes por billón
+      unit: 'µg/m³',
+      description: 'El óxido nítrico se produce sobre todo por el humo de los autos y fábricas. Puede afectar la calidad del aire y, si hay mucho, puede causar molestias al respirar.'
     },
     {
       name: 'no2',
       label: 'Dióxido de nitrógeno',
-      unit: 'ppb', // Partes por billón
+      unit: 'µg/m³',
+      description: 'El dióxido de nitrógeno viene del tráfico y de quemar combustibles. Respirarlo puede irritar los ojos y la garganta, y empeorar problemas como el asma.'
     },
     {
       name: 'so2',
       label: 'Dióxido de azufre',
-      unit: 'ppb', // Partes por billón
+      unit: 'µg/m³',
+      description: 'El dióxido de azufre se genera al quemar carbón o petróleo. Puede causar tos, irritación en la nariz y problemas para respirar, sobre todo en personas sensibles.'
     },
     {
       name: 'pm10',
       label: 'Partículas PM10',
-      unit: 'µg/m³', // Microgramos por metro cúbico
+      unit: 'µg/m³',
+      description: 'Las partículas PM10 son polvo y suciedad muy pequeños que flotan en el aire. Al respirarlas pueden entrar a los pulmones y causar tos o molestias, especialmente en niños y personas mayores.'
     },
     {
       name: 'nh3',
       label: 'Amoniaco',
-      unit: 'ppb', // Partes por billón
+      unit: 'µg/m³',
+      description: 'El amoníaco se encuentra en productos de limpieza y en el aire cerca de granjas. Puede irritar los ojos, la piel y la garganta si se respira mucho.'
     },
   ];
   const [GeneralIndicatorsArray, setGeneralIndicatorsArray] = useState(GeneralIndicators);
+  const [openModal, setOpenModal] = useState(null); // nombre del indicador abierto
 
   async function getIndicators(location) {
     try {
@@ -92,17 +101,71 @@ function GeneralIndicators({location}) {
               flex: { xs: '1 1 125px', sm: '1 1 145px', md: '1 1 160px' },
               mx: { xs: 0.5, sm: 1 },
               my: 1,
+              position: 'relative',
             }}
             key={indicator.name}
           >
-            <CardContent>
+            <CardContent sx={{padding: 1}}>
               <Box sx={{ minHeight: 60, mb: 1 }}>
                 <Typography variant={{ xs: 'body1', sm: 'h5' }} fontWeight="bold">{indicator.label}</Typography>
                 <Typography variant="body2" color="text.secondary">({indicator.name.toUpperCase()})</Typography>
               </Box>
               <Typography variant="h4">{indicator.value}</Typography>
               <Typography variant="caption" color="text.secondary">{indicator.unit}</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <IconButton
+                  size="small"
+                  onClick={e => { e.stopPropagation(); setOpenModal(indicator.name); }}
+                  aria-label={`Más información sobre ${indicator.label}`}
+                >
+                  <InfoOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Box>
             </CardContent>
+            <Modal
+              open={openModal === indicator.name}
+              onClose={() => setOpenModal(null)}
+              aria-labelledby={`modal-title-${indicator.name}`}
+              aria-describedby={`modal-desc-${indicator.name}`}
+            >
+              <Box sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                bgcolor: 'background.paper',
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                border: '2px solid #1976d2',
+                p: { xs: 2.5, sm: 4 },
+                borderRadius: 3,
+                maxWidth: 420,
+                width: '92vw',
+                minWidth: 260,
+                position: 'relative',
+                overflow: 'hidden',
+              }}>
+                <IconButton
+                  aria-label="Cerrar"
+                  onClick={() => setOpenModal(null)}
+                  sx={{ position: 'absolute', top: 8, right: 8, color: '#1976d2', zIndex: 2 }}
+                >
+                  <CloseIcon />
+                </IconButton>
+                <Box sx={{ mb: 2, textAlign: 'center' }}>
+                  <Typography id={`modal-title-${indicator.name}`} variant="h6" fontWeight="bold" color="primary" gutterBottom>
+                    {indicator.label} ({indicator.name.toUpperCase()})
+                  </Typography>
+                </Box>
+                <Typography id={`modal-desc-${indicator.name}`} variant="body1" sx={{ textAlign: 'justify', lineHeight: 1.7 }}>
+                  {indicator.description.split('\n').map((line, idx) => (
+                    <span key={idx}>
+                      {line}
+                      {idx !== indicator.description.split('\n').length - 1 && <br />}
+                    </span>
+                  ))}
+                </Typography>
+              </Box>
+            </Modal>
           </Card>
         ))}
       </Stack>
