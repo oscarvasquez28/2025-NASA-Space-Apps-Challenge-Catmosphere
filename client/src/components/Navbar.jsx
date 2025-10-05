@@ -4,18 +4,13 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
-  // Puedes cambiar esto por tu lógica real de autenticación
+  const location = useLocation();
   const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
 
-  const handleLogin = () => {
-    sessionStorage.setItem('isLoggedIn', 'true');
-    navigate('/');
-  };
 
   const handleLogout = () => {
     sessionStorage.removeItem('isLoggedIn');
@@ -28,10 +23,12 @@ function Navbar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#222' }}>
           Catmosphere
         </Typography>
-        {isLoggedIn ? (
+        {location.pathname === '/login' ? (
+          <Button sx={{ color: '#222' }} onClick={() => navigate(-1)}>Regresar</Button>
+        ) : isLoggedIn ? (
           <Button sx={{ color: '#222' }} onClick={handleLogout}>Cerrar sesión</Button>
         ) : (
-          <Button sx={{ color: '#222' }} onClick={handleLogin}>Iniciar sesión</Button>
+          <Button sx={{ color: '#222' }} onClick={() => navigate('/login')}>Login</Button>
         )}
       </Toolbar>
     </AppBar>
