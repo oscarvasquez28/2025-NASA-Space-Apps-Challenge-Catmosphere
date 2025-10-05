@@ -4,17 +4,29 @@ import { Stack, Typography } from '@mui/material';
 
 
 function DailyIndicators() {
-  const Today = new Date().toString().split(' ')[0];
+  const dayMap = {
+    'Sun': 'Domingo',
+    'Mon': 'Lunes',
+    'Tue': 'Martes',
+    'Wed': 'Miércoles',
+    'Thu': 'Jueves',
+    'Fri': 'Viernes',
+    'Sat': 'Sábado'
+  };
 
-  const next4Days = [];
+  const getSpanishDay = (date) => {
+    const dayAbbr = date.toString().split(' ')[0];
+    return dayMap[dayAbbr];
+  };
+
+  const today = new Date();
+  const Days = [getSpanishDay(today)];
+
   for (let i = 1; i <= 4; i++) {
     const nextDay = new Date();
-    nextDay.setDate(new Date().getDate() + i);
-    next4Days.push(nextDay.toString().split(' ')[0]);
+    nextDay.setDate(today.getDate() + i);
+    Days.push(getSpanishDay(nextDay));
   }
-  
-  const Days = [Today, ...next4Days];
-  
   return (
     <Container>
       {Days.map((day) => (
