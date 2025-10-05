@@ -1,9 +1,14 @@
+import {Card, CardContent } from '@mui/material';
 import Container from '@mui/material/Container';
 
 function HistoricalChart() {
   return (
     <Container>
-      <div>HistoricalChart</div>
+      <Card>
+        <CardContent sx={{ minWidth: 300, minHeight: 200, textAlign: 'center',placeContent: 'center' }}>
+          HistoricalChart
+        </CardContent>
+      </Card>
     </Container>
   )
 }
