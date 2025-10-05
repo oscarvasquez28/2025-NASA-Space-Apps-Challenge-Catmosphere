@@ -3,8 +3,7 @@ import api from '../lib/axios';
 export default {
     async getGeminiRecommendation( {userPreferences}){
         try {
-      const coords = JSON.parse(sessionStorage.getItem('userLocation'));
-      console.log(coords);
+      const coords = JSON.parse(sessionStorage.getItem('userLocation')) ?? { lat: 19.4326, lng: -99.1332 }; // Fallback a CDMX
 
             const { data } = await api.post(`/posts/recommendation/`,{
                 latitude: coords.lat,
