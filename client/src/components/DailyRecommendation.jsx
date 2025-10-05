@@ -24,7 +24,7 @@ function DailyRecommendation() {
     <Container>
       <Card sx={{ 
         minWidth: 300,
-        minHeight: 50,
+        minHeight: 60,
         textAlign: 'center',
         alignContent: 'center',
         py: 2

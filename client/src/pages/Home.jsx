@@ -18,9 +18,15 @@ const Home = () => {
         <LocationHeader />
         <GeneralIndicators location={location} />
         <DailyRecommendation />
-        <Stack spacing={2} direction="row">
-          <DailyIndicators />
-          <InteractiveMap onLocationSelect={setLocation} />
+        <Stack spacing={2} direction="row" alignItems="stretch">
+          <Box sx={{ width: { xs: '100%', md: '33%' } }}>
+            <DailyIndicators />
+          </Box>
+          <Box sx={{ width: { xs: '100%', md: '67%' }, display: 'flex' }}>
+            <Box sx={{ flex: 1 }}>
+              <InteractiveMap onLocationSelect={setLocation} />
+            </Box>
+          </Box>
         </Stack>
         <HistoricalChart />
       </Box>

@@ -106,11 +106,11 @@ function LocationHeader() {
             ? weather.data.summary
             : <Skeleton variant="text" width={180} sx={{ margin: '8px auto' }} />}
         </Typography>
-        {location && (
+        {/* {location && (
           <Typography variant="body1">
             Lat: {location.lat.toFixed(4)}, Lng: {location.lng.toFixed(4)}
           </Typography>
-        )}
+        )} */}
       </Box>
     </Container>
   );

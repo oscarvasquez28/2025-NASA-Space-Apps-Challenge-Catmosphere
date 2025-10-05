@@ -36,13 +36,16 @@ function HistoricalChart() {
       {
         try {
           const storedLocation = sessionStorage.getItem('userLocation');
+          let coords;
           if (storedLocation) {
-            const coords = JSON.parse(storedLocation);
-            const forecastData = await Weather.getForecast(coords);
-            setForecast(forecastData.prediction);
+            coords = JSON.parse(storedLocation);
           } else {
-            console.log('No user location found in sessionStorage.');
+            // Coordenadas de Guadalupe, NL, MX
+            coords = { lat: 25.676, lng: -100.256 };
+            console.log('No user location found in sessionStorage. Using Guadalupe default location.');
           }
+          const forecastData = await Weather.getForecast(coords);
+          setForecast(forecastData.prediction);
         } catch (error) {
           console.error('Error fetching forecast data:', error);
         }
