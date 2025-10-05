@@ -57,6 +57,7 @@ function Login() {
 				});
 				// Guardar estado de login (puedes guardar token, etc.)
 				sessionStorage.setItem('isLoggedIn', 'true');
+				sessionStorage.setItem('user', JSON.stringify(res.data.Usuario));
 				setSuccess('Login exitoso. Redirigiendo...');
 				setTimeout(() => navigate('/'), 1200);
 			}
